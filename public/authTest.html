@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Форма обратной связи</title>
+</head>
+<body>
+<h1>Регистрация</h1>
+
+<form class="contentform" novalidate>
+    <fieldset>
+        <label class="form-group">
+            <p>Фамилия <span>*</span></p>
+            <span class="icon-case"><i class="fa fa-male"></i></span>
+            <input type="text" name="lastname">
+        </label>
+
+        <label class="form-group">
+            <p>Имя <span>*</span></p>
+            <span class="icon-case"><i class="fa fa-user"></i></span>
+            <input type="text" name="name">
+        </label>
+
+        <label class="form-group">
+            <p>Электронная почта <span>*</span></p>
+            <span class="icon-case"><i class="fa fa-envelope-o"></i></span>
+            <input type="email" name="email">
+        </label>
+
+        <label class="form-group">
+            <p>Номер телефона <span>*</span></p>
+            <span class="icon-case"><i class="fa fa-phone"></i></span>
+            <input type="tel" name="phone">
+        </label>
+
+        <label class="form-group">
+            <p>Пароль <span>*</span></p>
+            <span class="icon-case"></span>
+            <input type="password" name="password">
+        </label>
+
+        <label class="form-group">
+            <p>Пароль ещё раз <span>*</span></p>
+            <input type="password" name="password">
+        </label><br/><br/><br/>
+        <button type="submit" class="button-contact" disabled>Отправить сообщение</button>
+    </fieldset>
+</form>
+
+<script src="https://use.fontawesome.com/70378a66b8.js"></script>
+<script type="text/javascript" src="formJs.js"></script>
+</body>
+</html>

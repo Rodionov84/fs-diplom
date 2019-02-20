@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/',  ['uses' => 'ClientController@spa']);
+
+Route::group(['prefix'=>'admin','middleware'=>['web']], function () {
+    Route::get('/',  ['uses' => 'AdminController@spa']);
+});
+
+Route::get('/ticket/{code}.png', function ($code)
+{
+    return QRCode::text($code)->png();
 });
