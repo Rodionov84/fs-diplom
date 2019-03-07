@@ -43,7 +43,7 @@ class CinemaHallsControll extends React.Component {
         return (
             <li key={`cinema-hall-${cinema_hall.id}`}>
                 {cinema_hall.title}
-                <button onClick={()=>{cinemaHallsControll.deleteCinemaHall(index)}} className="conf-step__button conf-step__button-trash"></button>
+                <button onClick={()=>{cinemaHallsControll.deleteCinemaHall(index)}} className="conf-step__button conf-step__button-trash" style={{marginLeft: 7}}></button>
             </li>
         );
     }
@@ -56,7 +56,7 @@ class CinemaHallsControll extends React.Component {
                     <p className="conf-step__paragraph">Создание нового кинозала:</p>
                     <div className="conf-step__legend">
                         <label className="conf-step__label">
-                            Название
+                            Название:
                             <input
                                 type="text"
                                 className="conf-step__input"

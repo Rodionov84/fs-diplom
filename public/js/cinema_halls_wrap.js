@@ -13,7 +13,11 @@ class CinemaHallsWrap extends React.Component {
     renderCinemaHall(cinema_hall, index, cinemaHallsWrap ) {
         return(
             <li key={`cinema-hall-tab-${cinema_hall.id}`}>
-                <input type="radio" className="conf-step__radio" name="chairs-hall-edit" value={index} checked={index === cinemaHallsWrap.state.selected_index} onChange={event=>{ this.setState({selected_index: parseInt(event.target.value)}); }} />
+                <input type="radio" className="conf-step__radio"
+                       name="chairs-hall-edit"
+                       value={index}
+                       checked={index === cinemaHallsWrap.state.selected_index}
+                       onChange={event=>{ this.setState({selected_index: parseInt(event.target.value)}); }} />
                 <span className="conf-step__selector">{cinema_hall.title}</span>
             </li>
         );

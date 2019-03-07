@@ -130,27 +130,34 @@ class CinemaControll extends React.Component {
             <div>
                 <section className="conf-step">
                     <header className="conf-step__header conf-step__header_opened">
+                        <h2 className="conf-step__title">Авторизация</h2>
+                    </header>
+                    <CinemaAuth/>
+                </section>
+
+                <section className="conf-step">
+                    <header className="conf-step__header conf-step__header_closed">
                         <h2 className="conf-step__title">Управление залами</h2>
                     </header>
                     <CinemaHallsControll cinema_halls={this.state.cinema_halls} />
                 </section>
 
                 <section className="conf-step">
-                    <header className="conf-step__header conf-step__header_opened">
+                    <header className="conf-step__header conf-step__header_closed">
                         <h2 className="conf-step__title">Конфигурация залов</h2>
                     </header>
                     <CinemaHallsWrap cinema_halls={this.state.cinema_halls} />
                 </section>
 
                 <section className="conf-step">
-                    <header className="conf-step__header conf-step__header_opened">
+                    <header className="conf-step__header conf-step__header_closed">
                         <h2 className="conf-step__title">Конфигурация цен</h2>
                     </header>
                     <CinemaHallsPrice cinema_halls={this.state.cinema_halls} />
                 </section>
 
                 <section className="conf-step">
-                    <header className="conf-step__header conf-step__header_opened">
+                    <header className="conf-step__header conf-step__header_closed">
                         <h2 className="conf-step__title">Сетка сеансов</h2>
                     </header>
                     <MoviesEdit
@@ -160,7 +167,7 @@ class CinemaControll extends React.Component {
                 </section>
 
                 <section className="conf-step">
-                    <header className="conf-step__header conf-step__header_opened">
+                    <header className="conf-step__header conf-step__header_closed">
                         <h2 className="conf-step__title">Открыть продажи</h2>
                     </header>
                     <CinemaHallsOpenSales cinema_halls={this.state.cinema_halls} />

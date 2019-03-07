@@ -17,30 +17,8 @@
     <span class="page-header__subtitle">Администраторррская</span>
 </header>
 
-<main class="conf-steps" id="auth">
-    <section class="conf-step">
-        <header class="conf-step__header conf-step__header_opened">
-            <h2 class="conf-step__title">Авторизация</h2>
-        </header>
-        <!--<div class="conf-step__wrapper">
-
-        </div>-->
-        <form class="contentform" novalidate style=" align: center;">
-            <fieldset>
-                    <p>Логин </p>
-                    <input type="email" name="email" class="conf-step__input"  style=" width: 300px;" >
-                </label>
-                    <p>Пароль </p>
-                    <input type="password" name="password" class="conf-step__input"  style=" width: 300px;">
-                </label><br/>
-
-                <button type="submit" class="button-contact" disabled style=" width: 100px; text-align: center">Войти</button>
-            </fieldset>
-        </form>
-    </section>
-</main>
-
 <main class="conf-steps" id="main">
+
 
 </main>
 
@@ -59,6 +37,8 @@
 <script src="/js/movies_seances_timeline.js" type="text/babel"></script>
 <script src="/js/cinema_halls_open_sales.js" type="text/babel"></script>
 <script src="/js/movies_edit.js" type="text/babel"></script>
+<script src="/js/cinema_auth.js" type="text/babel"></script>
+
 
 <script src="/js/cinema_controll.js" type="text/babel"></script>
 
