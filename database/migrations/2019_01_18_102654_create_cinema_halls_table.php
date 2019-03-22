@@ -20,7 +20,7 @@ class CreateCinemaHallsTable extends Migration
             $table->tinyInteger('length')->unsigned();
             $table->decimal('price', 5, 2)->unsigned();
             $table->decimal('price_vip', 5, 2)->unsigned();
-            $table->tinyInteger('isOpen')->unsigned()->default(0);;
+            $table->tinyInteger('isOpenSales')->unsigned()->default(0);
             $table->timestamps();
         });
     }

@@ -30,6 +30,7 @@ class CinemaHallSeats extends React.Component {
                 }
             });
             xhr.open("GET", "/api/cinema_hall_seats?cinema_hall_id=" + cinema_hall.id);
+            xhr.setRequestHeader("Authorization", "Bearer " + this.props.token); 
             xhr.send();
         }
     }

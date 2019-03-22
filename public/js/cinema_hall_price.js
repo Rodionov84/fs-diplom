@@ -30,6 +30,7 @@ class CinemaHallPrice extends React.Component {
             });
             xhr.open("PUT", "/api/cinema_halls/update_price");
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader("Authorization", "Bearer " + this.props.token); 
             xhr.send("id=" + cinema_hall.id + "&price=" + this.state.price + "&price_vip=" + this.state.price_vip);
         }
     }

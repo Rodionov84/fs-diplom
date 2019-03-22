@@ -21,3 +21,7 @@ Route::get('/ticket/{code}.png', function ($code)
 {
     return QRCode::text($code)->png();
 });
+
+Route::get('/welcome', function () {
+    return view('welcome');
+});

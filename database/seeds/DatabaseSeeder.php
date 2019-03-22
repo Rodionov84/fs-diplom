@@ -5,14 +5,12 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed the application's database.
+     *
+     * @return void
      */
     public function run()
     {
-        if (App::environment(['local', 'staging'])) {
-            $this->call(AuthTableSeeder::class);
-        }
-
         // $this->call(UsersTableSeeder::class);
     }
 }

@@ -44,6 +44,7 @@ class CinemaHallEdit extends React.Component {
             });
             xhr.open("PUT", "/api/cinema_halls/update");
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader("Authorization", "Bearer " + this.props.token); 
             xhr.send(
                 "id=" + cinema_hall.id +
                 "&width=" + this.state.width +
@@ -87,6 +88,7 @@ class CinemaHallEdit extends React.Component {
                     update={this.state.seats_update}
                     delete={this.state.seats_delete}
                     cache={this.state.seats_cache}
+                    token={this.props.token}
                 />
                 <fieldset className="conf-step__buttons text-center">
                     <button

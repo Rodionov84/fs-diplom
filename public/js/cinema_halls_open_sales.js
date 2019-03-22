@@ -39,6 +39,7 @@ class CinemaHallsOpenSales extends React.Component {
         });
         xhr.open("PUT", "/api/cinema_halls/openSales");
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader("Authorization", "Bearer " + this.props.token); 
         xhr.send("id=" + cinema_hall.id + "&isOpenSales=" + (!cinema_hall.isOpenSales ? 1 : 0));
     }
 

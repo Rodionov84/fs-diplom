@@ -9,6 +9,7 @@ class Movie extends React.Component {
             movie: props.movie,
             movie_seances: props.movie_seances,
         };
+        
 
     }
 
@@ -59,6 +60,20 @@ class Movie extends React.Component {
     }
 
     render() {
+        let ending = "";
+        const duration = this.state.movie.duration;
+             
+        if (duration % 100 < 11 || duration % 100 > 14) {
+            if (duration % 10 == 1)
+                ending = "а";
+            else if (duration % 10 == 2) 
+                ending = "ы";
+            else if (duration % 10 == 3) 
+                ending = "ы";
+            else if (duration % 10 == 4) 
+                ending = "ы"; 
+        }
+
         return (
             <section className="movie">
                     <div className="movie__info">
@@ -68,10 +83,10 @@ class Movie extends React.Component {
                         <div className="movie__description">
                             <h2 className="movie__title">{this.state.movie.name}</h2>
                             <p className="movie__synopsis">{this.state.movie.description}</p>
-                            <p className="movie__data">
-                                <span className="movie__data-duration">{this.state.movie.duration} минут </span>
-                                <span className="movie__data-origin">{this.state.movie.country}</span>
-                            </p>
+                            <div className="movie__data">
+                                <span className="movie__data-duration"> {duration} минут{ending} </span>                        
+                                <span className="movie__data-origin">{this.state.movie.country} </span>
+                            </div>
                         </div>
                     </div>
                 {this.renderSeances.bind(this)()}

@@ -8,7 +8,8 @@ class CinemaControll extends React.Component {
             isLoading: true,
             cinema_halls: [],
             movies: [],
-            movie_seances: []
+            movie_seances: [],
+            token: localStorage.getItem('token')
         };
 
         const self = this;
@@ -103,6 +104,7 @@ class CinemaControll extends React.Component {
         const xhr = new XMLHttpRequest();
         xhr.addEventListener("load", function(){ self.loadingProgress.bind(self)(this.responseText) });
         xhr.open("GET", "/api/initial");
+        xhr.setRequestHeader("Authorization", "Bearer " + this.state.token); 
         xhr.send();
     }
 
@@ -126,34 +128,45 @@ class CinemaControll extends React.Component {
     }
 
     render() {
-        return (
-            <div>
+        if( this.state.token == null )
+        {
+            return (
                 <section className="conf-step">
                     <header className="conf-step__header conf-step__header_opened">
                         <h2 className="conf-step__title">Авторизация</h2>
                     </header>
                     <CinemaAuth/>
                 </section>
+            );
+        }
 
+        return (
+            <div>
                 <section className="conf-step">
                     <header className="conf-step__header conf-step__header_closed">
                         <h2 className="conf-step__title">Управление залами</h2>
                     </header>
-                    <CinemaHallsControll cinema_halls={this.state.cinema_halls} />
+                    <CinemaHallsControll 
+                        cinema_halls={this.state.cinema_halls} 
+                        token={this.state.token} />
                 </section>
 
                 <section className="conf-step">
                     <header className="conf-step__header conf-step__header_closed">
                         <h2 className="conf-step__title">Конфигурация залов</h2>
                     </header>
-                    <CinemaHallsWrap cinema_halls={this.state.cinema_halls} />
+                    <CinemaHallsWrap 
+                        cinema_halls={this.state.cinema_halls} 
+                        token={this.state.token} />
                 </section>
 
                 <section className="conf-step">
                     <header className="conf-step__header conf-step__header_closed">
                         <h2 className="conf-step__title">Конфигурация цен</h2>
                     </header>
-                    <CinemaHallsPrice cinema_halls={this.state.cinema_halls} />
+                    <CinemaHallsPrice 
+                        cinema_halls={this.state.cinema_halls} 
+                        token={this.state.token} />
                 </section>
 
                 <section className="conf-step">
@@ -163,14 +176,17 @@ class CinemaControll extends React.Component {
                     <MoviesEdit
                         cinema_halls={this.state.cinema_halls}
                         movies={this.state.movies}
-                        movie_seances={this.state.movie_seances} />
+                        movie_seances={this.state.movie_seances}
+                        token={this.state.token} />
                 </section>
 
                 <section className="conf-step">
                     <header className="conf-step__header conf-step__header_closed">
                         <h2 className="conf-step__title">Открыть продажи</h2>
                     </header>
-                    <CinemaHallsOpenSales cinema_halls={this.state.cinema_halls} />
+                    <CinemaHallsOpenSales 
+                        cinema_halls={this.state.cinema_halls} 
+                        token={this.state.token} />
                 </section>
             </div>
         );

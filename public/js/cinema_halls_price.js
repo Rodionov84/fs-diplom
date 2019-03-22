@@ -26,7 +26,10 @@ class CinemaHallsPrice extends React.Component {
                 <ul className="conf-step__selectors-box">
                     {Array.prototype.map.call(this.state.cinema_halls, (value, index)=> this.renderCinemaHall(value, index, this))}
                 </ul>
-                <CinemaHallPrice index={this.state.selected_index} cinema_halls={this.state.cinema_halls} />
+                <CinemaHallPrice 
+                    index={this.state.selected_index} 
+                    cinema_halls={this.state.cinema_halls}
+                    token={this.props.token} />
             </div>
         );
     }

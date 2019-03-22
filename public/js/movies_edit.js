@@ -45,6 +45,7 @@ class MoviesEdit extends React.Component {
         });
         xhr.open("POST", "/api/movies/add");
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader("Authorization", "Bearer " + this.props.token); 
         xhr.send(
             "name=" + this.state.movieForm_name + "&" +
             "description=" + this.state.movieForm_description + "&" +
@@ -60,6 +61,7 @@ class MoviesEdit extends React.Component {
             const xhr = new XMLHttpRequest();
             xhr.open("DELETE", "/api/movies/remove");
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader("Authorization", "Bearer " + this.props.token); 
             xhr.send("id=" + movie_id);
             this.state.movie_seances.deleteByMovieId(movie_id);
             this.state.movies.deleteIndex(index);
@@ -94,6 +96,11 @@ class MoviesEdit extends React.Component {
     movieForm_removeSeance(index) {
         delete this.state.movieForm_seances[index];
         this.forceUpdate();
+    }
+
+    hexByInteger(number) {
+        const colors = ['D7CD89', 'BD89D7', 'D79389', 'D789AE', '9689D7', '89BAD7', 'D789CC', '89D7C9', '89D79B', '91D789', 'C4D789'];
+        return `#${colors[number % colors.length]}`;
     }
 
     renderMovieForm() {
@@ -246,17 +253,30 @@ class MoviesEdit extends React.Component {
         );
     }
 
-    renderMovieItem(movie, index )
-    {
+    renderMovieItem(movie, index ) {
+        let ending = "";
+        const duration = movie.duration;
+             
+        if (duration % 100 < 11 || duration % 100 > 14) {
+            if (duration % 10 == 1)
+                ending = "а";
+            else if (duration % 10 == 2) 
+                ending = "ы";
+            else if (duration % 10 == 3) 
+                ending = "ы";
+            else if (duration % 10 == 4) 
+                ending = "ы"; 
+        }
         return(
             <div
                 key={`movie-item-${movie.id}`}
                 className="conf-step__movie"
                 onDoubleClick={()=>{ this.remove.bind(this)(movie.id, index); }}
+                style={{backgroundColor: this.hexByInteger(movie.id)}}
             >
                 <img className="conf-step__movie-poster" alt="poster" src={movie.poster}/>
                 <h3 className="conf-step__movie-title">{movie.name}</h3>
-                <p className="conf-step__movie-duration">{movie.duration} минут</p>
+                <p className="conf-step__movie-duration">{duration} минут{ending} </p>
             </div>
         );
     }
@@ -272,6 +292,7 @@ class MoviesEdit extends React.Component {
                     cinema_halls={this.state.cinema_halls}
                     movies={this.state.movies}
                     movie_seances={this.state.movie_seances}
+                    hexGenerator={this.hexByInteger}
                 />
             </div>
        );

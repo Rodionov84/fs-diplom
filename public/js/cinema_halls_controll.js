@@ -24,7 +24,7 @@ class CinemaHallsControll extends React.Component {
             }
         });
         xhr.open("POST", "/api/cinema_halls/add");
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader("Authorization", "Bearer " + this.props.token); 
         xhr.send("title=" + title);
     }
 
@@ -34,6 +34,7 @@ class CinemaHallsControll extends React.Component {
             const xhr = new XMLHttpRequest();
             xhr.open("DELETE", "/api/cinema_halls/remove");
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader("Authorization", "Bearer " + this.props.token); 
             xhr.send("id=" + id);
             this.state.cinema_halls.deleteIndex(cinema_hall_index);
         }
@@ -43,7 +44,7 @@ class CinemaHallsControll extends React.Component {
         return (
             <li key={`cinema-hall-${cinema_hall.id}`}>
                 {cinema_hall.title}
-                <button onClick={()=>{cinemaHallsControll.deleteCinemaHall(index)}} className="conf-step__button conf-step__button-trash" style={{marginLeft: 7}}></button>
+                <button onClick={()=>{cinemaHallsControll.deleteCinemaHall(index)}} className="conf-step__button conf-step__button-trash" title="удалить" style={{marginLeft: 7}}></button>
             </li>
         );
     }

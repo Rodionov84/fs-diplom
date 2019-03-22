@@ -29,7 +29,7 @@ class MoviesSeancesTimeline extends React.Component {
                                 <div
                                     key={`cinema-hall-timeline-seance-${movie_seance.id}`}
                                      className="conf-step__seances-movie"
-                                    style={{width: width, backgroundColor: this.rgbByInteger(movie.id), left: left}}>
+                                    style={{width: width, backgroundColor: this.props.hexGenerator(movie.id), left: left}}>
                                     <p className="conf-step__seances-movie-title">{movie.name}</p>
                                     <p className="conf-step__seances-movie-start">{movie_seance.time.substr(0, 5)}</p>
                                 </div>
@@ -41,17 +41,7 @@ class MoviesSeancesTimeline extends React.Component {
             </div>
         );
     }
-
-    rgbByInteger(number) {
-        return `rgb(${this.randomInteger(0, 255)}, ${this.randomInteger(0, 255)}, ${this.randomInteger(0, 255)})`;
-    }
-
-    randomInteger(min, max) {
-        var rand = min + Math.random() * (max - min)
-        rand = Math.round(rand);
-        return rand;
-    }
-
+    
     render() {
         return (
             <div className="conf-step__seances">
