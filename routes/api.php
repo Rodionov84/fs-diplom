@@ -57,7 +57,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'Api'], function () {
     Route::group(['namespace' => 'Auth'], function () {
-        Route::get('register', 'RegisterController');
+        Route::get('register', 'RegisterController');//get используется временно для регистрации администратора
         Route::post('login', 'LoginController');
         //Route::post('logout', 'LogoutConrtoller')->middleware('auth:api');
     });

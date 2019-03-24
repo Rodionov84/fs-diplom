@@ -4,6 +4,8 @@ class CinemaControll extends React.Component {
     constructor(props) {
         super(props);
 
+        //localStorage.removeItem('token');
+
         this.state = {
             isLoading: true,
             cinema_halls: [],
