@@ -52,6 +52,40 @@ class MoviesController extends Controller
         );
     }
 
+    public function edit(Request $request)
+    {
+        $movie = Movie::find($request->movie_id);
+        $movie->name = $request->name;
+        $movie->description = $request->description;
+        $movie->duration = $request->duration;
+        $movie->country = $request->country;
+        $movie->poster = $request->poster;
+        $movie->save();
+
+        $seances = json_decode($request->seances);
+        foreach ($seances as $seance_info)
+        {
+            if( isset($seance_info->new) )
+            {
+                $seance = MovieSeance::findOrNew($seance_info->id);
+                $seance->cinema_hall_id = $seance_info->cinema_hall_id;
+                $seance->movie_id = $movie->id;
+                $seance->time = $seance_info->time;
+                $seance->save();
+            }
+        }
+
+        $removeSeances = json_decode($request->removeSeances);
+        MovieSeance::destroy($removeSeances);
+        
+        return $this->response->array(
+            array(
+                "movie" => $movie->toArray(),
+                "seances" => MovieSeance::where("movie_id", $movie->id)->get()
+            )
+        );
+    }
+
     public function remove(Request $request)
     {
         return $this->response->array([

@@ -10,6 +10,7 @@ class MoviesEdit extends React.Component {
             movie_seances: props.movie_seances,
 
             isActiveMovieForm: false,
+            movieForm_movie_id: null,
             movieForm_name: "",
             movieForm_description: "",
             movieForm_duration: "",
@@ -17,7 +18,8 @@ class MoviesEdit extends React.Component {
             movieForm_poster: "",
             movieForm_seance_cinema_hall: "",
             movieForm_seance_time: "",
-            movieForm_seances: []
+            movieForm_seances: [],
+            movieForm_removeSeances: []
         };
     }
 
@@ -38,21 +40,51 @@ class MoviesEdit extends React.Component {
             const response = JSON.parse(this.responseText);
             if( response != undefined && response.movie != undefined && response.movie.id != undefined )
             {
-                self.state.movies.push(response.movie);
-                self.state.movie_seances.pushArray(response.seances);
+                if( self.state.movieForm_movie_id == null )
+                {
+                    self.state.movies.push(response.movie);
+                    self.state.movie_seances.pushArray(response.seances);
+                }
+                else
+                {
+                    self.state.movies[self.state.movies.getIndexById(response.movie.id)] = response.movie;
+                    self.state.movie_seances.deleteByMovieId(response.movie.id);
+                    self.state.movie_seances.pushArray(response.seances);                    
+                }
                 self.setState({isActiveMovieForm: false});
             }
         });
-        xhr.open("POST", "/api/movies/add");
+        xhr.open("POST", "/api/movies/" + ( this.state.movieForm_movie_id == null ? 'add' : 'edit' ));
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.setRequestHeader("Authorization", "Bearer " + this.props.token); 
         xhr.send(
+            "movie_id=" + this.state.movieForm_movie_id + "&" +
             "name=" + this.state.movieForm_name + "&" +
             "description=" + this.state.movieForm_description + "&" +
             "duration=" + this.state.movieForm_duration + "&" +
             "country=" + this.state.movieForm_country + "&" +
             "poster=" + this.state.movieForm_poster + "&" +
-            "seances=" + JSON.stringify(this.state.movieForm_seances));
+            "seances=" + JSON.stringify(this.state.movieForm_seances) + "&" +
+            "removeSeances=" + JSON.stringify(this.state.movieForm_removeSeances));
+    }
+
+    edit(movie_id, index) {
+        const movie = this.state.movies.getById(movie_id);
+        const movie_seances = this.state.movie_seances.getByMovieId(movie_id);
+
+        this.setState({
+            isActiveMovieForm: true,
+            movieForm_movie_id: movie_id,
+            movieForm_name: movie.name,
+            movieForm_description: movie.description,
+            movieForm_duration: movie.duration,
+            movieForm_country: movie.country,
+            movieForm_poster: movie.poster,
+            movieForm_seance_cinema_hall: "",
+            movieForm_seance_time: "",
+            movieForm_seances: movie_seances,
+            movieForm_removeSeances: []
+        });
     }
 
     remove(movie_id, index) {
@@ -65,12 +97,14 @@ class MoviesEdit extends React.Component {
             xhr.send("id=" + movie_id);
             this.state.movie_seances.deleteByMovieId(movie_id);
             this.state.movies.deleteIndex(index);
+            this.setState({isActiveMovieForm: false});
         }
     }
 
     addNewMovie(moviesEdit) {
         moviesEdit.setState({
             isActiveMovieForm: true,
+            movieForm_movie_id: null,
             movieForm_name: "",
             movieForm_description: "",
             movieForm_duration: "",
@@ -78,22 +112,31 @@ class MoviesEdit extends React.Component {
             movieForm_poster: "",
             movieForm_seance_cinema_hall: "",
             movieForm_seance_time: "",
-            movieForm_seances: []
+            movieForm_seances: [],
+            movieForm_removeSeances: []
         });
     }
 
     movieForm_addSeance() {
-        this.state.movieForm_seances.push({
-            id: null,
-            cinema_hall_id: this.state.movieForm_seance_cinema_hall,
-            time: this.state.movieForm_seance_time
-        });
-        this.state.movieForm_seance_cinema_hall = "";
-        this.state.movieForm_seance_time = "";
-        this.forceUpdate();
+        if( parseInt(this.state.movieForm_seance_cinema_hall) > 0 )
+        {
+            this.state.movieForm_seances.push({
+                id: null,
+                cinema_hall_id: this.state.movieForm_seance_cinema_hall,
+                time: this.state.movieForm_seance_time,
+                new: true
+            });
+            this.state.movieForm_seance_cinema_hall = "";
+            this.state.movieForm_seance_time = "";
+            this.forceUpdate();
+        }
     }
 
     movieForm_removeSeance(index) {
+        if( this.state.movieForm_seances[index].new == undefined )
+        {
+            this.state.movieForm_removeSeances.push(this.state.movieForm_seances[index].id);
+        }
         delete this.state.movieForm_seances[index];
         this.forceUpdate();
     }
@@ -227,10 +270,13 @@ class MoviesEdit extends React.Component {
                     className="conf-step__button conf-step__button-regular"
                     style={{marginTop: 0, width: 140}}
                     onClick={()=>{ this.movieForm_addSeance.bind(this)(); }}
-                >Добавить
-                </button>
+                >Добавить новый сеанс</button>
 
                 <fieldset className="conf-step__buttons text-center">
+                    { this.state.movieForm_movie_id > 0 ? <button
+                                className="conf-step__button conf-step__button-regular"
+                                onClick={()=>{ this.remove.bind(this)(this.state.movieForm_movie_id, this.state.movies.getIndexById(this.state.movieForm_movie_id)); }}>Удалить фильм</button>
+                        : null }
                     <button
                         className="conf-step__button conf-step__button-regular"
                         onClick={()=>{ this.setState({isActiveMovieForm: false}); }}>Отмена</button>
@@ -271,7 +317,9 @@ class MoviesEdit extends React.Component {
             <div
                 key={`movie-item-${movie.id}`}
                 className="conf-step__movie"
-                onDoubleClick={()=>{ this.remove.bind(this)(movie.id, index); }}
+                onClick={()=>{
+                    this.edit.bind(this)(movie.id, index);
+                }}
                 style={{backgroundColor: this.hexByInteger(movie.id)}}
             >
                 <img className="conf-step__movie-poster" alt="poster" src={movie.poster}/>

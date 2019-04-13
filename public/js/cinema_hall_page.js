@@ -74,13 +74,14 @@ class CinemaHallPage extends React.Component {
 
                 seats.push(
                     <span
+                        key={`chair_${i}_${j}`}
                         className={className}
                         onClick={()=>{ if( seat != undefined && seat.isAvailable ) this.selectSeat.bind(this)( seat ) }}
                         ></span>
                             );
             }
 
-            rows.push(<div className="buying-scheme__row">{seats}</div>);
+            rows.push(<div key={`row_${i}`} className="buying-scheme__row">{seats}</div>);
         }
 
         return rows;
@@ -115,7 +116,6 @@ class CinemaHallPage extends React.Component {
 
     render()
     {
-        console.warn(this.state.seats);
         return (
             <main>
                 <section className="buying">
@@ -125,13 +125,9 @@ class CinemaHallPage extends React.Component {
                             <p className="buying__info-start">Начало сеанса: {this.state.seance.time.substr(0, 5)}</p>
                             <p className="buying__info-hall">{this.state.cinema_hall.title}</p>
                         </div>
-                        <div className="buying__info-hint">
-                            <p>Тапните дважды,<br />чтобы увеличить</p>
-                        </div>
                     </div>
                     {this.renderScheme()}
                     <button className="acceptin-button" onClick={()=>{
-                        console.warn(this.state.selectedSeats);
                         if( Object.keys(this.state.selectedSeats).length )
                             this.props.cinema.setState({page: 'payment', selectedSeats: this.state.selectedSeats});
                     }}>Забронировать</button>

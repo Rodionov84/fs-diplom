@@ -13,14 +13,10 @@ class Movie extends React.Component {
 
     }
 
-    selectSeance()
-    {
-
-    }
-
     renderSeances()
     {
         const cinema_halls_seances = [];
+        const time = new Date();
 
         this.state.cinema_halls.forEach(function(cinema_hall){
             const seances = this.state.movie_seances.filter(function(seance) {
@@ -34,6 +30,15 @@ class Movie extends React.Component {
                         <h3 className="movie-seances__hall-title">{cinema_hall.title}</h3>
                         <ul className="movie-seances__list">
                             {seances.map(function(seance) {
+                                console.warn(this.props.isToday);
+                                const seanceTime = parseInt(seance.time.substr(0, 2));
+                                const isActive = !(time.getHours() > seanceTime && this.props.isToday);
+                                const aStyle = {};
+                                if(!isActive)
+                                {
+                                    aStyle.cursor = 'default';
+                                    aStyle.backgroundColor = 'silver';
+                                }
                                 return (
                                     <li
                                         key={`seances-cinema_hall-${cinema_hall.id}-${seance.id}`}
@@ -41,8 +46,17 @@ class Movie extends React.Component {
                                         <a
                                             className="movie-seances__time"
                                             href="#"
-                                            onClick={()=>
-                                                this.props.cinema.selectSeance.bind(this.props.cinema)( seance )
+                                            style={aStyle}
+                                            onClick={(event)=>{
+                                                if( isActive )
+                                                {
+                                                    this.props.cinema.selectSeance.bind(this.props.cinema)( seance )
+                                                }
+                                                else
+                                                {
+                                                    event.preventDefault();
+                                                }
+                                            }
                                             }
                                         >
                                             {seance.time.substr(0, 5)}

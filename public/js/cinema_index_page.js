@@ -20,6 +20,7 @@ class CinemaIndexPage extends React.Component {
                 movie={movie}
                 movie_seances={this.state.movie_seances}
                 cinema={this.props.cinema}
+                isToday={this.props.cinema.state.dayShift === 0}
             />
         );
     }

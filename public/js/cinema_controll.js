@@ -55,6 +55,17 @@ class CinemaControll extends React.Component {
             }
             return null;
         };
+        this.state.movies.getIndexById = function( id ) {
+            let index = 0;
+            for( let movie of self.state.movies )
+            {
+                if( movie.id == id ) {
+                    return index;
+                }
+                index++;
+            }
+            return null;
+        };
         this.state.movies.push = function(e) {
             Array.prototype.push.call(self.state.movies, e);
             self.forceUpdate();
@@ -73,6 +84,17 @@ class CinemaControll extends React.Component {
                 }
             }
             return null;
+        };
+        this.state.movie_seances.getByMovieId = function(movie_id) {
+            const movie_seances = [];
+            for (let index = 0; index < self.state.movie_seances.length; index++)
+            {
+                if( self.state.movie_seances[index].movie_id == movie_id )
+                {
+                    movie_seances.push(self.state.movie_seances[index]);
+                }
+            }
+            return movie_seances;
         };
         this.state.movie_seances.push = function(e) {
             Array.prototype.push.call(self.state.movie_seances, e);

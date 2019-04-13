@@ -35,6 +35,7 @@ $api->version('v1', ['middleware' => 'api'], function ($api) {
         $api->get('cinema_hall_seats', 'App\\Api\\V1\\Controllers\\CinemaHallSeatsController@getAll');
 
         $api->post('movies/add', 'App\\Api\\V1\\Controllers\\MoviesController@add');
+        $api->post('movies/edit', 'App\\Api\\V1\\Controllers\\MoviesController@edit');
         $api->delete('movies/remove', 'App\\Api\\V1\\Controllers\\MoviesController@remove');
 
         $api->get('supervisor/check', 'App\\Api\\V1\\Controllers\\SupervisorController@check');
@@ -49,16 +50,9 @@ $api->version('v1', ['middleware' => 'api'], function ($api) {
     });
 });
 
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-	return "sdfsdgf";
-    return $request->user();
-});
-
 Route::group(['namespace' => 'Api'], function () {
     Route::group(['namespace' => 'Auth'], function () {
         Route::get('register', 'RegisterController');//get используется временно для регистрации администратора
         Route::post('login', 'LoginController');
-        //Route::post('logout', 'LogoutConrtoller')->middleware('auth:api');
     });
 });
