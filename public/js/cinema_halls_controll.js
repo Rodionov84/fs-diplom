@@ -24,6 +24,7 @@ class CinemaHallsControll extends React.Component {
             }
         });
         xhr.open("POST", "/api/cinema_halls/add");
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.setRequestHeader("Authorization", "Bearer " + this.props.token); 
         xhr.send("title=" + title);
     }
