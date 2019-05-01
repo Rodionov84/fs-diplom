@@ -19,7 +19,7 @@ class CreateTicketsTable extends Migration
             $table->date('date');
             $table->char('code', 32)->unique();
             $table->boolean('is_punched')->default(0);
-            $table->decimal('price', 5, 2)->unsigned();
+            $table->decimal('price', 7, 2)->unsigned();
             $table->timestamps();
 
             $table->foreign('movie_seance_id')
